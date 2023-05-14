@@ -9,7 +9,7 @@ import numpy as np
 from PIL import Image
 
 #load YOLOv3 and YOLOv3 custom
-net = cv2.dnn.readNet('weights/yolov3_plate.weights', 
+net = cv2.dnn.readNet('Weights/yolov3_plate.weights', 
                       'YoloV3 cfg/yolov3_plate.cfg')
 
 net.setPreferableBackend(cv2.dnn.DNN_BACKEND_CUDA)
@@ -42,7 +42,7 @@ def detectPlate(file):
             scores = detection[5:]
             class_id = np.argmax(scores)
             confidence = scores[class_id]
-            if confidence > 0.5:
+            if confidence > 0.8:
                 center_x = int(detection[0]*width)
                 center_y = int(detection[1]*height)
                 w = int(detection[2]*width)
@@ -101,11 +101,18 @@ def detectFromImg(file):
 def detectFromVid(file):
     cap = cv2.VideoCapture(file)
 
-    fourcc = cv2.VideoWriter_fourcc("*MP4V ")
-    out = cv2.VideoWriter('detection.mp4', fourcc, (640,480))
+    fourcc = cv2.VideoWriter_fourcc(*'mp4v')
 
-    while True:
-        _, img = cap.read()
+    width = int(cap.get(cv2.CAP_PROP_FRAME_WIDTH))
+    height = int(cap.get(cv2.CAP_PROP_FRAME_HEIGHT))
+    fps = int(cap.get(cv2.CAP_PROP_FPS))
+
+    fourcc = cv2.VideoWriter_fourcc(*'XVID')
+    out = cv2.VideoWriter('output.avi', fourcc, fps, (width, height))
+
+
+    while cap.isOpened():
+        ret, img = cap.read()
         height, width, _ = img.shape
 
         blob = cv2.dnn.blobFromImage(img, 1/255, (416, 416), (0,0,0), swapRB=True, crop=False)
@@ -140,25 +147,22 @@ def detectFromVid(file):
                 for i in indexes.flatten():
                     x, y, w, h = boxes[i]
                     confidence = str(round(confidences[i],2))
-                    color = colors[i]
-                    cv2.rectangle(img, (x,y), (x+w, y+h), color, 2)
+                    cv2.rectangle(img, (x,y), (x+w, y+h), (0,255,0), 2)
                     crop_img = img[y:y+h, x:x+w]
-                    saved = savefImg(crop_img)
         
             out.write(img)
             cv2.imshow('Image', img)
-            if cv2.waitKey(1) & 0xFF==ord('q'):
+        if cv2.waitKey(1) & 0xFF==ord('q'):
                 break
 
-        cap.release()
-        cv2.destroyAllWindows()
+    cap.release()
+    out.release()
+    cv2.destroyAllWindows()
 
 
 
 
-
-
-                
+                    
 
 
 

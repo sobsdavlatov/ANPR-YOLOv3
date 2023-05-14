@@ -3,7 +3,6 @@ import tkinter as tk
 from unittest import TextTestResult
 import func as fc 
 import detect_function as df
-import cv2
 #initialize the main window 
 fc.mainwin()
 #buttons 
