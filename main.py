@@ -2,8 +2,7 @@ from logging import root
 import tkinter as tk
 from unittest import TextTestResult
 import func as fc 
-import detect_func as df
-import database_func as dbf
+import detect_function as df
 import cv2
 #initialize the main window 
 fc.mainwin()
@@ -13,5 +12,6 @@ filedialogButton.pack()
 
 if __name__ == "__main__":
     tk.mainloop()
+    
 
 
