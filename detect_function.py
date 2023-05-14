@@ -101,6 +101,9 @@ def detectFromImg(file):
 def detectFromVid(file):
     cap = cv2.VideoCapture(file)
 
+    fourcc = cv2.VideoWriter_fourcc("*MP4V ")
+    out = cv2.VideoWriter('detection.mp4', fourcc, (640,480))
+
     while True:
         _, img = cap.read()
         height, width, _ = img.shape
@@ -141,7 +144,8 @@ def detectFromVid(file):
                     cv2.rectangle(img, (x,y), (x+w, y+h), color, 2)
                     crop_img = img[y:y+h, x:x+w]
                     saved = savefImg(crop_img)
-            cv2.putText(img,  text, (100,100), font, 2, (255,255,255), 2)
+        
+            out.write(img)
             cv2.imshow('Image', img)
             if cv2.waitKey(1) & 0xFF==ord('q'):
                 break
