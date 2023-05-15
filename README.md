@@ -2,7 +2,7 @@
 The ANPR (Automatic Number Plate Recognition) system that utilizes a custom YOLO-v3 model and optical character recognition is a powerful tool designed to detect land vehicles and their registration plates. The system uses a combination of deep learning and computer vision techniques to identify vehicles in real-time, capture their registration plates, and save the information into a CSV file.
 
 Once the number plates are detected, the optical character recognition (OCR) component of the system kicks in. OCR is a process that uses computer vision algorithms to recognize and extract text from images. The ANPR system applies OCR to the number plates to extract the alphanumeric characters and convert them into machine-readable text.
-![Alt text](./Saved detection/plate_img_14052023_163704.jpeg)
+![Alt text]([./Saved detection/plate_img_14052023_163704.jpeg](https://github.com/sobsdavlatov/ANPR-YOLOv3/blob/master/Saved%20detection/plate_img_14052023_163704.jpeg))
 The ANPR system then saves the extracted data into a CSV file, which can be used for further analysis or integration with other systems. The CSV file contains a timestamp of when the vehicle was detected, the registration plate number, and the location of the vehicle.
 # How to run the program
 1. To use system donwload Weights from this link https://drive.google.com/drive/u/0/folders/1h7R4GFkNrsl3GnqQ0D83MhMiz8pvFGFE Create "Weights" folder inside of directory and put these files inside the folder. 
