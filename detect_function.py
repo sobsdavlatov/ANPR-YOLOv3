@@ -88,16 +88,19 @@ def readPlate(file):
         #saving the result into csv file
         with open('Saved detection/numbers.csv', 'a') as n:
             n.write(text + '\n')
+    return text
 
 def detectFromImg(file):
     plate_img = detectPlate(file)
     plate_number = readPlate(plate_img)
 
-    #preview detections
     plate_imgPLT = plt.imread(plate_img)
-    plt.imshow(plate_imgPLT)
+    fig, ax = plt.subplots(figsize=(8, 6))
+    ax.imshow(plate_imgPLT)
+    ax.text(0, -10, plate_number, fontsize=12, color='white',
+            bbox=dict(facecolor='black', alpha=0.5, boxstyle='round'))
     plt.show()
-
+    
 def detectFromVid(file):
     cap = cv2.VideoCapture(file)
 
